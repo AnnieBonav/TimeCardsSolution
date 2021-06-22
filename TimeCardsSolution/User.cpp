@@ -1,7 +1,8 @@
 #include "User.h"
 
 User::User() {
-	name = "Unknown";
+	userId = "A0000";
+	name = "Unknown Name";
 	age = 0;
 }
 

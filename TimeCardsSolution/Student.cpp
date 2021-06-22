@@ -34,5 +34,5 @@ void Student::setProgramName(std::string programName) {
 
 //OTHER
 void Student::show() {
-	std::cout << "\nSTUDENT" << "\nId: " << getUserId() << "\nName: " << getName() << "\nAge: " << getAge() << "\nStudy Type:" << studyType << "\nProgram Name: " << programName;
+	std::cout << "\n\nSTUDENT" << "\nId: " << getUserId() << "\nName: " << getName() << "\nAge: " << getAge() << "\nStudy Type:" << studyType << "\nProgram Name: " << programName;
 }

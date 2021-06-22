@@ -43,11 +43,12 @@ void Time::setHour(int hour) {
 
 //OTHER
 void Time::show() {
-	std::cout << "\nThis is your time:" << "\nMinute: " << minute << "\nHour: " << hour;
+	//std::cout << "\n\nTime:" << "\nMinute: " << minute << "\nHour: " << hour;
+	std::cout << minute << " : " << hour;
 }
 
 //OPERATORS OVERCHARGE
 void Time::operator=(Time time) {
-	minute = time.getMinute();
-	hour = time.getHour();
+	this->minute = time.getMinute();
+	this->hour = time.getHour();
 }

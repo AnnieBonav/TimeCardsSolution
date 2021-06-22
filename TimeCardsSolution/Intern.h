@@ -9,7 +9,7 @@ private:
 public:
 	//constructors
 	Intern();
-	Intern(std::string, std::string, int, std::string, float, int); //userId, name, age, workArea, salary, duration
+	Intern(std::string, std::string, int, std::string, float, std::string, int); //userId, name, age, workArea, salary, duration
 	~Intern();
 
 	//GETTERS

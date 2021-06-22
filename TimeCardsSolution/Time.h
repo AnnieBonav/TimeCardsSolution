@@ -9,7 +9,7 @@ private:
 
 public:
 	Time();
-	Time(int, int); //minute, hour
+	Time(int, int); // hour : minute
 	~Time();
 
 	//GETTERS

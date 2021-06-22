@@ -1,10 +1,12 @@
 #include "FTW.h"
 
 FTW::FTW() {
+	FTWtype = "Unknwown FTW Type";
 	yearsWorked = 0;
 }
 
-FTW::FTW(std::string userId, std::string name, int age, std::string workArea, float salary, int yearsWorked) : Worker(userId, name, age, workArea, salary) {//userId, name, age, workArea, salary, yearsWorked
+FTW::FTW(std::string userId, std::string name, int age, std::string workArea, float salary, std::string FTWtype, int yearsWorked) : Worker(userId, name, age, workArea, salary) {//userId, name, age, workArea, salary, yearsWorked
+	this->FTWtype = FTWtype;
 	this->yearsWorked = yearsWorked;
 }
 
@@ -13,8 +15,8 @@ FTW::~FTW() {
 }
 
 //GETTERS
-std::string FTW::getFTWType() {
-	return FTWType;
+std::string FTW::getFTWtype() {
+	return FTWtype;
 }
 
 int FTW::getYearsWorked() {
@@ -22,8 +24,8 @@ int FTW::getYearsWorked() {
 }
 
 //SETTERS
-void FTW::setFTWType(std::string FTWType) {
-	this->FTWType = FTWType;
+void FTW::setFTWtype(std::string FTWtype) {
+	this->FTWtype = FTWtype;
 }
 
 void FTW::setYearsWorked(int yearsWorked) {
@@ -32,5 +34,5 @@ void FTW::setYearsWorked(int yearsWorked) {
 
 //OTHER
 void FTW::show() {
-	std::cout << "\nFULL-TIME WORKER" << "\nId: " << getUserId() << "\nName: " << getName() << "\nAge: " << getAge() << "\nWork Area:" << getWorkArea() << "\nSalary: " << getSalary() << "\nWorker Type: " << FTWType << "\Years Worked: " << yearsWorked;
+	std::cout << "\n\nFULL-TIME WORKER" << "\nId: " << getUserId() << "\nName: " << getName() << "\nAge: " << getAge() << "\nWork Area:" << getWorkArea() << "\nSalary: " << getSalary() << "\nWorker Type: " << FTWtype << "\nYears Worked: " << yearsWorked;
 }

@@ -1,14 +1,25 @@
 #include "TimeCard.h"
 
 TimeCard::TimeCard() {
-	userIndex = 0;
+	timeCardIndex = 0;
+	userId = "A00000000";
 }
 
-TimeCard::TimeCard(int userIndex, int timeCardIndex, Time initialTime, Time finalTime) {
-	this->userIndex = userIndex;
+TimeCard::TimeCard(int timeCardIndex, std::string userIndex, Time initialTime, Time finalTime) {
 	this->timeCardIndex = timeCardIndex;
+	this->userId = userIndex;
 	this->initialTime = initialTime;
 	this->finalTime = finalTime;
+}
+
+TimeCard::TimeCard(int timeCardIndex, std::string usrId, int initMinute, int initHour, int finalMinute, int finalHour) {
+	Time t1(initMinute, initHour);
+	Time t2(finalMinute, finalHour);
+
+	this->timeCardIndex = timeCardIndex;
+	this->userId = userId;
+	this->initialTime = t1;
+	this->finalTime = t2;
 }
 
 TimeCard::~TimeCard() {
@@ -16,8 +27,8 @@ TimeCard::~TimeCard() {
 }
 
 //GETTERS
-int TimeCard::getUserIndex() {
-	return userIndex;
+std::string TimeCard::getuserId() {
+	return userId;
 }
 
 Time TimeCard::getInitialTime() {
@@ -33,8 +44,8 @@ int TimeCard::getTimeCardIndex() {
 }
 
 //SETTEERS
-void TimeCard::setUserIndex(int userIndex) {
-	this->userIndex = userIndex;
+void TimeCard::setuserId(std::string userId) {
+	this->userId = userId;
 }
 
 void TimeCard::setInitialTime(Time initialTime) {
@@ -47,9 +58,9 @@ void TimeCard::setFinalTime(Time finalTime) {
 
 //OTHER
 void TimeCard::show() {
-	std::cout << "\nTIME CARD" << "\nUser Index: " << userIndex << "\nINITIAL";
+	std::cout << "\n\nTIME CARD #" << timeCardIndex << "\nUser Index: " << userId << "\nInitial time	";
 	initialTime.show();
-	std::cout << "\nFINAL";
+	std::cout << "\nFinal time	";
 	finalTime.show();
 }
 

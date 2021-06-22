@@ -31,5 +31,5 @@ void Worker::setSalary(float salary) {
 
 //OTHER
 void Worker::show() {
-	std::cout << "\nWORKER" << "\nId: " << getUserId() << "\nName: " << getName() << "\nAge: " << getAge() << "\nWork Area:" << workArea << "\nSalary: " << salary;
+	std::cout << "\n\nWORKER" << "\nId: " << getUserId() << "\nName: " << getName() << "\nAge: " << getAge() << "\nWork Area: " << workArea << "\nSalary: " << salary;
 }
