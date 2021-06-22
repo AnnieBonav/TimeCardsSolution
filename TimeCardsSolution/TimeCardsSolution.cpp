@@ -180,12 +180,12 @@ void showTimeCardVector(std::vector<TimeCard> &timeCards, int timeCardsNum) {
 This function shows all the values inside a vector
 
 */
-void showUsersVector(std::vector<User> &users, int usersNum) {
+void showUsersVector(std::vector<User*> &users, int usersNum) {
     for (int i = 0; i < usersNum; i++) {
-        users[i].show();
+        users[i]->show();
     }
 
-    users[0].show();
+    users[0]->show();
 }
 
 /*
@@ -209,11 +209,10 @@ void fillTimeCardsInfo(std::string timeCardsFile, std::vector<TimeCard> &timeCar
         std::cout << "\nEND TEMP\n";
         timeCards.push_back(temp);
     }
-
     myFile.close();
 }
 
-void fillUsersVector(std::string usersFile, std::vector<User> &users, int usersNum) {
+void fillUsersVector(std::string usersFile, std::vector<User*> &users, int usersNum) {
     std::ifstream myFile;
     myFile.open(usersFile, std::ios::in);
 
@@ -225,28 +224,23 @@ void fillUsersVector(std::string usersFile, std::vector<User> &users, int usersN
     for (int i = 0; i < usersNum; i++) {
         myFile >> userType >> userId >> userName >> userAge;
         if (userType == 'u') {
-            User tempUser(userId, userName, userAge);
-            users.push_back(tempUser);
+            users.push_back(new User(userId, userName, userAge));
         }
         else if (userType == 'w') {
             myFile >> workerWorkArea >> workerSalary;
-            Worker tempWorker(userId, userName, userAge, workerWorkArea, workerSalary);
-            users.push_back(tempWorker);
+            users.push_back(new Worker(userId, userName, userAge, workerWorkArea, workerSalary));
         }
         else if (userType == 's') {
             myFile >> studentStudyType >> studentProgramName;
-            Student tempStudent(userId, userName, userAge, studentStudyType, studentProgramName);
-            users.push_back(tempStudent);
+            users.push_back(new Student(userId, userName, userAge, studentStudyType, studentProgramName));
         }
         else if (userType == 'i') {
             myFile >> workerWorkArea >> workerSalary >> internType >> internDuration;
-            Intern tempIntern(userId, userName, userAge, workerWorkArea, workerSalary, internType, internDuration);
-            users.push_back(tempIntern);
+            users.push_back(new Intern(userId, userName, userAge, workerWorkArea, workerSalary, internType, internDuration));
         }
         else if (userType == 'f') {
             myFile >> workerWorkArea >> workerSalary >> FTWtype >> FTWyearsWorked;
-            FTW tempFTW(userId, userName, userAge, workerWorkArea, workerSalary, FTWtype, FTWyearsWorked);
-            users.push_back(tempFTW);
+            users.push_back(new FTW(userId, userName, userAge, workerWorkArea, workerSalary, FTWtype, FTWyearsWorked));
         }
     }
 
@@ -259,10 +253,10 @@ int main() {
     int timeCardsNum = countLines(timeCardsFile);
     
     std::vector<User*> users;
-    std::vector<TimeCard*> timeCards;
+    std::vector<TimeCard> timeCards;
 
-    fillTimeCardsInfo(timeCardsFile, timeCards, timeCardsNum);
     fillUsersVector(usersFile, users, usersNum);
+    fillTimeCardsInfo(timeCardsFile, timeCards, timeCardsNum);
 
     std::cout << "\n\nSHOW TIME CARDS VECTOR\n";
     showTimeCardVector(timeCards, timeCardsNum);
