@@ -25,7 +25,7 @@ public:
 	void setFinalTime(Time);
 
 	//OTHER
-	void show();
+	virtual void show();
 
 	//OPERATOR OVERCHARGE
 

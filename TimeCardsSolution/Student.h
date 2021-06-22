@@ -19,6 +19,6 @@ public:
 	void setProgramName(std::string);
 
 	//OTHER
-	void show();
+	virtual void show();
 };
 

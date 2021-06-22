@@ -26,11 +26,11 @@ public:
 	void setAge(int);
 
 	//OTHER
-	void show();
+	virtual void show();
 
 	//OPERATOR OVERCHARGE
 	void operator+=(int); //This adds a time Card to the User vector
 
-	//friend ostream& operator << (ostream&, User&);
+	friend std::ostream& operator << (std::ostream&, User&);
 };
 

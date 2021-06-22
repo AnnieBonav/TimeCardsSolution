@@ -19,7 +19,7 @@ public:
 	void setYearsWorked(int);
 
 	//OTHER
-	void show();
+	virtual void show();
 
 };
 

@@ -21,7 +21,7 @@ public:
 	void setHour(int);
 
 	//OTHER
-	void show();
+	virtual void show();
 
 	//OPERATORS OVERCHARGE
 	void operator=(Time);

@@ -45,10 +45,15 @@ void User::setAge(int age) {
 
 //OTHER
 void User::show() {
-	std::cout << "\nUSER" << "\nId: " << userId << "\nName: " << name << "\nAge: " << age;
+	std::cout << "\n\nUSER" << "\nId: " << userId << "\nName: " << name << "\nAge: " << age;
 }
 
 //OPERATOR OVERCHARGE
 void User::operator+=(int timeCardIndex) {
 	myTimeCards.push_back(timeCardIndex);
+}
+
+std::ostream& operator<<(std::ostream& message, User& printUser) {
+	message << "\n\nUSER" << "\nName: " << printUser.getName() << "\nAge: " << printUser.getAge();
+	return message;
 }

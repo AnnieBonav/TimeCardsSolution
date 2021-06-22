@@ -19,6 +19,6 @@ public:
 	void setSalary(float);
 
 	//OTHER
-	void show();
+	virtual void show();
 };
 

@@ -184,6 +184,8 @@ void showUsersVector(std::vector<User> &users, int usersNum) {
     for (int i = 0; i < usersNum; i++) {
         users[i].show();
     }
+
+    users[0].show();
 }
 
 /*
@@ -256,8 +258,8 @@ int main() {
     int usersNum = countLines(usersFile);
     int timeCardsNum = countLines(timeCardsFile);
     
-    std::vector<User> users;
-    std::vector<TimeCard> timeCards;
+    std::vector<User*> users;
+    std::vector<TimeCard*> timeCards;
 
     fillTimeCardsInfo(timeCardsFile, timeCards, timeCardsNum);
     fillUsersVector(usersFile, users, usersNum);
