@@ -71,12 +71,16 @@ int countLines(std::string fileName) {
     return lineNum;
 }
 
+/*
+
+This method checks that the user´s inpit is actually a number and not something else.
+
+*/
 bool isNumber(std::string number) {
-    bool validNumber;
-    if (true) {
-        validNumber = true;
-    }
-    else {
+    bool validNumber = true;
+    try {
+        stoi(number);
+    } catch (...) {
         validNumber = false;
         std::cout << "\nPlease remember that no letters or special characters are allowed.";
     }
@@ -169,9 +173,9 @@ void useClasses() {
 This function shows all the values inside a vector
 
 */
-void showTimeCardVector(std::vector<TimeCard> &timeCards, int timeCardsNum) {
+void showTimeCardVector(std::vector<TimeCard*> &timeCards, int timeCardsNum) {
     for (int i = 0; i < timeCardsNum; i++) {
-        timeCards[i].show();
+        timeCards[i]->show();
     }
 }
 
@@ -190,11 +194,12 @@ void showUsersVector(std::vector<User*> &users, int usersNum) {
 
 /*
 
-This function fills up my time Cards vector. I pass ¿by reference the vector form the main to this function.
+This function fills up my time Cards vector. I pass by reference the vector form the main function to this 
+function.
 
 */
 
-void fillTimeCardsInfo(std::string timeCardsFile, std::vector<TimeCard> &timeCards, int timeCardsNum) {
+void fillTimeCardsInfo(std::string timeCardsFile, std::vector<TimeCard*> &timeCards, int timeCardsNum) {
     std::ifstream myFile;
     myFile.open(timeCardsFile, std::ios::in);
 
@@ -202,16 +207,18 @@ void fillTimeCardsInfo(std::string timeCardsFile, std::vector<TimeCard> &timeCar
     int timeCardIndex, initMinute, initHour, finalMinute, finalHour;
     for (int i = 0; i < timeCardsNum; i++) {
         myFile >> timeCardIndex >> userId >> initMinute >> initHour >> finalMinute >> finalHour;
-        TimeCard temp(timeCardIndex, userId, initMinute, initHour, finalMinute, finalHour);
-
-        std::cout << "\nTEMP\n";
-        temp.show();
-        std::cout << "\nEND TEMP\n";
-        timeCards.push_back(temp);
+        timeCards.push_back(new TimeCard(timeCardIndex, userId, initMinute, initHour, finalMinute, finalHour));
     }
     myFile.close();
 }
 
+/*
+
+This function fills up my users vector. I pass by reference the vector form the main function to this
+function. What this does is check which is the first letter of the line in the document; That way, it can
+assign the type of user that it is (from the inherited classes) and ask/save the other variables needed.
+
+*/
 void fillUsersVector(std::string usersFile, std::vector<User*> &users, int usersNum) {
     std::ifstream myFile;
     myFile.open(usersFile, std::ios::in);
@@ -246,21 +253,151 @@ void fillUsersVector(std::string usersFile, std::vector<User*> &users, int users
 
 }
 
+int validateNumber(int min, int max, std::string numberType) { //Number type is in which metho dthe number is being asked
+    bool validNumber = false, validChoice; /*ValidNumber is for the first while, validChoice is for the second 
+    one. Could I use recursive?? Or something better??*/
+    std::string stringNumber, validateAction;
+    int validIntNum;
+
+    while (validNumber != true) {
+        validChoice = false;
+        std::cout << "\nNumber: ";
+        std::cin >> stringNumber;
+        if (isNumber(stringNumber) == true) {
+            validIntNum = stoi(stringNumber);
+            if (validIntNum >= min && validIntNum <= max) {
+                std::cout << "This is the number you chose: " << validIntNum << "\nPlease enter 1 if you accept this information, 2 if you want to re-write it or 0 if you want to abort this action.\nChoice: ";
+                
+                while (validChoice != true) {
+                    std::cin >> validateAction;
+                    if (validateAction == "1") {
+                        std::cout << "\nThis is the number you chose: " << validIntNum;
+                        validChoice = true;
+                        validNumber = true;
+
+                    }else if (validateAction == "2") {
+                        std::cout << "\nYou have decided to write another number for the " << numberType;
+                        validChoice = true;
+
+                    }else if (validateAction == "0") {
+                        std::cout << "\nYou have decided to abort the " << numberType << " action.";
+                        validIntNum = -1000;
+                        validChoice = true;
+                        validNumber = true;
+                    }
+                }
+                
+            }
+        }
+
+    }
+    return validIntNum;
+}
+
+void createUser(std::vector<User*> &users) {
+    int choice;
+    std::string userType;
+    std::cout << "\nChoose which Type of User will it be:\n1) Worker\n2) Student\n3) Unspecified\n0) Stop Action";
+    choice = validateNumber(0, 3, "'choosing user type'");
+    switch (choice) {
+        case 0:
+            std::cout << "\nChoose which type of Worker will it be:\n1) Intern\n2) Full Time Worker\n3) Unspecified\n0) Stop Action";
+            choice = validateNumber(0, 3, "'choosing Worker type'");
+            switch (choice) {
+                case 0:
+                    userType = "i";
+                    break;
+                case 1:
+                    userType = "f";
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                default:
+                    break;
+            }
+            break;
+
+        case 1:
+            userType = "s";
+            break;
+        case 2:
+            userType = "u";
+            break;
+        default:
+            break;
+    }
+}
+
+void createTimeCard(std::vector<TimeCard*>timeCards) {
+
+}
+
+
+void menu(std::string usersFile, std::string timeCardsFile, std::vector<User*> &users, std::vector<TimeCard*> &timeCards, int usersNum, int timeCardsNum, std::string divider) {
+    bool activeMenu = true;
+    int choice;
+
+    std::cout << "\nHey! Thanks for using this program!\n";
+    while (activeMenu != false) {
+        std::cout << divider << "Here is the menu you can choose from.\n1) Create User\n2) Create Time Card\n3) See Users\n4) See Time Cards\n0) Exit" << divider;
+        choice = validateNumber(0, 4, "'choosing menu function'");
+        switch (choice) {
+            case 0:
+                std::cout << "\n\nYou have chosen to exit the menu. Thanks for comming!\n\n";
+                activeMenu = false;
+                break;
+            case 1:
+                std::cout << divider << "YOU HAVE CHOSEN TO ADD A USER\n";
+                createUser(users);
+                break;
+                std::cout << divider;
+            case 2:
+                std::cout << "YOU HAVE CHOSEN TO ADD A NEW TIME CARD\n";
+                createTimeCard(timeCards);
+                break;
+            case 3:
+                std::cout << "\nYOU HAVE CHOSEN TO SEE THE USERS";
+                showUsersVector(users, usersNum);
+                break;
+            case 4:
+                std::cout << "YOU HAVE CHOSEN TO SEE THE TIME CARDS\n";
+                showTimeCardVector(timeCards, timeCardsNum);
+            default:
+                break;
+        }
+
+    }
+}
+
+void createDivider(std::string &divider) {
+    std::string sym;
+    std::cout << "\nPlease enter your favorite symbol: ";
+    std::cin >> sym;
+    divider = sym;
+
+    for (int i = 0; i < 6; i++) {
+        divider += divider;
+    }
+
+    divider = "\n" + divider + "\n";
+}
+
 int main() {
-    std::string usersFile = "Users.txt", timeCardsFile = "TimeCards.txt";
+    std::string usersFile = "Users.txt", timeCardsFile = "TimeCards.txt", divider = "\n****************************************\n";
+    //createDivider(divider);
 
     int usersNum = countLines(usersFile);
     int timeCardsNum = countLines(timeCardsFile);
     
     std::vector<User*> users;
-    std::vector<TimeCard> timeCards;
+    std::vector<TimeCard*> timeCards;
 
     fillUsersVector(usersFile, users, usersNum);
     fillTimeCardsInfo(timeCardsFile, timeCards, timeCardsNum);
 
-    std::cout << "\n\nSHOW TIME CARDS VECTOR\n";
-    showTimeCardVector(timeCards, timeCardsNum);
-    showUsersVector(users, usersNum);
+    menu(usersFile, timeCardsFile, users, timeCards, usersNum, timeCardsNum, divider);
     //useClasses();
 
     return 0;
